@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html data-theme="dark" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy — MenuCalendar</title>
+<meta name="description" content="MenuCalendar talks to EventKit and to Google's servers — directly from your Mac. No analytics. No accounts. No servers. Tokens stay in the macOS Keychain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px; background: var(--ui);
+    border: 1px solid var(--ui);
+    margin: var(--s-7) 0;
+  }
+  .principle {
+    background: var(--bg);
+    padding: var(--s-5);
+    display: flex; flex-direction: column; gap: var(--s-2);
+  }
+  .principle-icon {
+    width: 24px; height: 24px;
+    color: var(--cy);
+    margin-bottom: var(--s-2);
+  }
+  .principle-title { font-size: var(--fs-16); font-weight: 500; color: var(--tx); }
+  .principle-body { font-size: var(--fs-14); color: var(--tx-2); line-height: var(--lh-base); }
+
+  .data-table {
+    border: 1px solid var(--ui);
+    border-radius: var(--r-3);
+    overflow: hidden;
+    background: var(--bg-2);
+    margin: var(--s-5) 0 var(--s-7);
+  }
+  .data-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    padding: var(--s-4) var(--s-5);
+    border-bottom: 1px solid var(--ui);
+    font-size: var(--fs-14);
+    gap: var(--s-4);
+    align-items: start;
+  }
+  .data-row:last-child { border-bottom: none; }
+  .data-row.head {
+    background: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-11); text-transform: uppercase; letter-spacing: var(--tr-mega);
+    color: var(--tx-3);
+  }
+  .data-row .label { color: var(--tx); font-weight: 500; }
+  .data-row .what { color: var(--tx-2); }
+  .data-row .where { color: var(--tx-2); }
+  .data-row .where strong { color: var(--cy); font-weight: 500; }
+
+  .summary-box {
+    border: 1px solid var(--ui);
+    border-radius: var(--r-3);
+    background: var(--bg-2);
+    padding: var(--s-6);
+    margin: var(--s-6) 0;
+    display: grid; grid-template-columns: auto 1fr;
+    gap: var(--s-5); align-items: start;
+  }
+  .summary-icon {
+    width: 36px; height: 36px;
+    border-radius: var(--r-2);
+    background: rgba(58, 169, 159, 0.12);
+    color: var(--cy);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .summary-box p { font-size: var(--fs-16); color: var(--tx-2); line-height: var(--lh-loose); margin: 0; }
+  .summary-box p strong { color: var(--tx); font-weight: 500; }
+
+  @media (max-width: 760px) {
+    .data-row { grid-template-columns: 1fr; gap: var(--s-2); }
+    .data-row.head { display: none; }
+    .principles { grid-template-columns: 1fr; }
+    .summary-box { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a class="logo" href="/">
+        <span class="logo-glyph">4</span>
+        MenuCalendar
+      </a>
+      <nav>
+        <a class="nav-link" href="/#features">Features</a>
+        <a class="nav-link active" href="/privacy.html">Privacy</a>
+        <a class="nav-link" href="/support.html">Support</a>
+        <a class="nav-link" href="/changelog.html">Changelog</a>
+      </nav>
+      <a class="header-cta" href="/#download">Download</a>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-head">
+  <div class="container">
+    <span class="eyebrow page-eyebrow">Privacy</span>
+    <h1 class="page-title">Your calendar never leaves<br>your Mac<span class="accent">.</span></h1>
+    <p class="page-sub">
+      MenuCalendar runs entirely on your device. There's no MenuCalendar server, no analytics, no accounts to sign up for. Here's the long version.
+    </p>
+    <div class="page-meta">Last updated · June 4, 2026</div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <div class="prose narrow">
+
+      <div class="summary-box">
+        <div class="summary-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+        </div>
+        <p>
+          <strong>The short version.</strong> MenuCalendar reads your calendars and shows them in the menu bar. It talks to Apple's EventKit and to Google's calendar API <em>directly from your Mac</em>. None of your data passes through any server we run, because we don't run any. We don't have analytics, error reporting, or an account system.
+        </p>
+      </div>
+
+      <h2>What MenuCalendar reads</h2>
+      <p>
+        MenuCalendar reads calendar event data from two places, with your permission, and only when the popover or settings window is open.
+      </p>
+
+      <div class="data-table">
+        <div class="data-row head">
+          <span>Source</span>
+          <span>What it sees</span>
+          <span>Where it lives</span>
+        </div>
+        <div class="data-row">
+          <span class="label">iCloud &amp; Exchange<br>(EventKit)</span>
+          <span class="what">Calendars, event titles, times, locations, and attendees from accounts you've connected in macOS System Settings.</span>
+          <span class="where"><strong>Stays on your Mac.</strong> EventKit is Apple's system framework; data is read directly from the local calendar database.</span>
+        </div>
+        <div class="data-row">
+          <span class="label">Google Calendar<br>(OAuth)</span>
+          <span class="what">The same calendar fields, fetched from <span class="mono">www.googleapis.com</span> using a token you authorise.</span>
+          <span class="where"><strong>Stays on your Mac.</strong> Requests go from your Mac directly to Google's servers, never via MenuCalendar.</span>
+        </div>
+        <div class="data-row">
+          <span class="label">Your preferences</span>
+          <span class="what">Theme choice, week start, lead time for notifications, which calendars to show.</span>
+          <span class="where"><strong>Stays on your Mac</strong> in <span class="mono">UserDefaults</span>, like every other Mac app's settings.</span>
+        </div>
+      </div>
+
+      <h2>Where your tokens live</h2>
+      <p>
+        When you connect a Google account, Google issues two tokens: an access token (short-lived) and a refresh token (long-lived). MenuCalendar stores the refresh token in the <strong>macOS Keychain</strong> — the same encrypted store macOS uses for your Wi-Fi password, Safari logins, and other app credentials. The Keychain is encrypted at rest and unlocked with your login password.
+      </p>
+      <p>
+        MenuCalendar never transmits these tokens anywhere except back to Google when refreshing access. If you remove the Google account from MenuCalendar's Settings, the token is deleted from the Keychain immediately.
+      </p>
+
+      <h2>What MenuCalendar doesn't do</h2>
+
+      <div class="principles">
+        <div class="principle">
+          <div class="principle-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/><line x1="3" y1="3" x2="21" y2="21"/></svg>
+          </div>
+          <div class="principle-title">No analytics.</div>
+          <div class="principle-body">No first-party tracking, no third-party SDKs, no crash reports, no telemetry of any kind.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+          </div>
+          <div class="principle-title">No servers.</div>
+          <div class="principle-body">There is no MenuCalendar backend. Nothing to leak, nothing to subpoena, nothing to misconfigure.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          </div>
+          <div class="principle-title">No accounts.</div>
+          <div class="principle-body">There's nothing to sign up for, no email to give, no password to remember. You just download and run it.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          </div>
+          <div class="principle-title">No ads.</div>
+          <div class="principle-body">MenuCalendar is free because it's small and personal — not because you're the product. No upsells, no "Pro" tier, no nudges.</div>
+        </div>
+      </div>
+
+      <h2>Permissions you control</h2>
+      <ul>
+        <li><strong>Calendar access</strong> — granted via the standard macOS prompt the first time you open MenuCalendar. Revoke at any time in <span class="mono">System Settings → Privacy &amp; Security → Calendars</span>.</li>
+        <li><strong>Notifications</strong> — granted via the standard macOS prompt. Revoke at <span class="mono">System Settings → Notifications → MenuCalendar</span>.</li>
+        <li><strong>Google account</strong> — connect or disconnect at any time in MenuCalendar's <strong>Settings → Calendars</strong> tab. Disconnecting deletes the Keychain token immediately.</li>
+      </ul>
+
+      <h2>Network requests, in full</h2>
+      <p>
+        For completeness, here is every network destination MenuCalendar will contact:
+      </p>
+      <ul>
+        <li><span class="mono">accounts.google.com</span> — only during initial OAuth sign-in, in your default browser.</li>
+        <li><span class="mono">oauth2.googleapis.com</span> — to exchange and refresh tokens.</li>
+        <li><span class="mono">www.googleapis.com</span> — to fetch calendars and events.</li>
+        <li><span class="mono">fonts.googleapis.com</span> — only inside this website, not the app.</li>
+      </ul>
+      <p>
+        That's the entire list. iCloud and Exchange calendars are read locally via EventKit and don't generate any traffic of their own.
+      </p>
+
+      <h2>Open source</h2>
+      <p>
+        You don't have to take this page's word for it. MenuCalendar is open source — every line is on GitHub at <a href="https://github.com/enzoabuliak/MenuCalendar">github.com/enzoabuliak/MenuCalendar</a>. If you find something here that doesn't match the code, please open an issue.
+      </p>
+
+      <h2>Questions</h2>
+      <p>
+        Email <a href="mailto:enzo.abuliak@gmail.com?subject=MenuCalendar%20privacy">enzo.abuliak@gmail.com</a> with anything that isn't covered here. This page will change as the app does; check the date at the top to see when it was last updated.
+      </p>
+
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <span class="logo-glyph">4</span>
+          MenuCalendar
+        </div>
+        <div class="footer-tagline">A menu bar calendar for macOS.</div>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/support.html">Support</a>
+        <a href="/changelog.html">Changelog</a>
+        <a href="https://github.com/enzoabuliak/MenuCalendar">GitHub</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>© 2026 Enzo Abuliak</span>
+      <span>Made in Mendocino, California</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

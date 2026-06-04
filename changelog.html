@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html data-theme="dark" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog — MenuCalendar</title>
+<meta name="description" content="What changed in MenuCalendar, version by version. Releases follow SemVer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  .release {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--s-7);
+    padding: var(--s-8) 0;
+    border-bottom: 1px solid var(--ui);
+  }
+  .release:last-child { border-bottom: none; }
+
+  .release-meta {
+    position: sticky; top: 80px;
+    align-self: start;
+    display: flex; flex-direction: column; gap: var(--s-3);
+  }
+  .release-version {
+    font-size: var(--fs-32); font-weight: 500;
+    letter-spacing: var(--tr-tight); line-height: 1;
+    color: var(--tx);
+  }
+  .release-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-11); text-transform: uppercase; letter-spacing: var(--tr-mega);
+    color: var(--tx-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .release-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-11); text-transform: uppercase; letter-spacing: var(--tr-mega);
+    padding: 3px 8px;
+    border: 1px solid var(--ui-3); border-radius: var(--r-pill);
+    color: var(--tx-2); width: fit-content;
+  }
+  .release-tag .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--gr); }
+  .release-tag.upcoming .dot { background: var(--ye); }
+
+  .release-body { min-width: 0; }
+  .release-headline {
+    font-size: var(--fs-24); font-weight: 500;
+    line-height: var(--lh-snug); letter-spacing: var(--tr-snug);
+    color: var(--tx);
+    margin-bottom: var(--s-4);
+  }
+  .release-lead {
+    font-size: var(--fs-16); color: var(--tx-2);
+    line-height: var(--lh-loose);
+    margin-bottom: var(--s-6);
+    max-width: 60ch;
+  }
+  .release-lead strong { color: var(--tx); font-weight: 500; }
+
+  .change-group { margin-bottom: var(--s-6); }
+  .change-group:last-child { margin-bottom: 0; }
+  .change-group-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-11); text-transform: uppercase; letter-spacing: var(--tr-mega);
+    color: var(--tx-3);
+    margin-bottom: var(--s-3);
+    padding-top: var(--s-3);
+    border-top: 1px solid var(--ui);
+    display: flex; align-items: center; gap: var(--s-2);
+  }
+  .change-group-label.added::before    { content: '+'; color: var(--gr); }
+  .change-group-label.known::before    { content: '~'; color: var(--ye); }
+  .change-group-label.upcoming::before { content: '·'; color: var(--bl); }
+
+  .change-list { list-style: none; }
+  .change-item {
+    position: relative;
+    padding: var(--s-2) 0 var(--s-2) var(--s-4);
+    font-size: var(--fs-14); color: var(--tx-2);
+    line-height: var(--lh-loose);
+  }
+  .change-item::before {
+    content: ''; position: absolute;
+    left: 0; top: 16px;
+    width: 4px; height: 4px;
+    background: var(--ui-3); border-radius: 999px;
+  }
+  .change-item strong { color: var(--tx); font-weight: 500; }
+  .change-item .mono {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.92em;
+    color: var(--tx); background: var(--bg-2);
+    padding: 1px 5px; border-radius: var(--r-1); border: 1px solid var(--ui);
+  }
+
+  .source-note {
+    margin: var(--s-7) 0 var(--s-3);
+    padding: var(--s-5);
+    border: 1px solid var(--ui);
+    border-radius: var(--r-3);
+    background: var(--bg-2);
+    font-size: var(--fs-14);
+    color: var(--tx-2);
+    display: flex; align-items: center; gap: var(--s-4);
+  }
+  .source-note .mono {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.92em;
+    color: var(--tx); background: var(--bg);
+    padding: 2px 6px; border-radius: var(--r-1); border: 1px solid var(--ui);
+  }
+  .source-note a { color: var(--cy); }
+  .source-note svg { color: var(--tx-3); flex-shrink: 0; }
+
+  @media (max-width: 760px) {
+    .release { grid-template-columns: 1fr; gap: var(--s-4); padding: var(--s-7) 0; }
+    .release-meta { position: static; flex-direction: row; align-items: center; gap: var(--s-4); flex-wrap: wrap; }
+    .release-version { font-size: var(--fs-24); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a class="logo" href="/">
+        <span class="logo-glyph">4</span>
+        MenuCalendar
+      </a>
+      <nav>
+        <a class="nav-link" href="/#features">Features</a>
+        <a class="nav-link" href="/privacy.html">Privacy</a>
+        <a class="nav-link" href="/support.html">Support</a>
+        <a class="nav-link active" href="/changelog.html">Changelog</a>
+      </nav>
+      <a class="header-cta" href="/#download">Download</a>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-head">
+  <div class="container">
+    <span class="eyebrow page-eyebrow">Changelog</span>
+    <h1 class="page-title">What's new in<br>MenuCalendar<span class="accent">.</span></h1>
+    <p class="page-sub">
+      Version history, in plain language. Releases follow SemVer; the source of truth is <span class="kbd">CHANGELOG.md</span> in the repo.
+    </p>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+
+    <article class="release">
+      <div class="release-meta">
+        <div class="release-version">1.0.0</div>
+        <div class="release-date">June 4, 2026</div>
+        <span class="release-tag"><span class="dot"></span>Current</span>
+      </div>
+      <div class="release-body">
+        <h2 class="release-headline">First public release.</h2>
+        <p class="release-lead">
+          Free download, Developer ID signed and notarised. Every feature listed below is in this build — go grab it.
+        </p>
+
+        <div class="change-group">
+          <div class="change-group-label added">Added</div>
+          <ul class="change-list">
+            <li class="change-item"><strong>Menu bar status item</strong> with a date glyph that updates at midnight.</li>
+            <li class="change-item"><strong>Popover with a 6×7 month grid</strong>, today highlighted, dots on event days.</li>
+            <li class="change-item"><strong>Agenda list</strong> for the selected day; selecting "Today" returns to the live view.</li>
+            <li class="change-item"><strong>iCloud and Exchange calendars</strong> via EventKit, with the standard permission flow.</li>
+            <li class="change-item"><strong>Google Calendar</strong> via OAuth2 + PKCE; refresh tokens stored in the macOS Keychain.</li>
+            <li class="change-item"><strong>Per-calendar visibility toggles</strong>, grouped by source.</li>
+            <li class="change-item"><strong>Four themes</strong> — Native, Flexoki, Minimal, Paper — with live preview.</li>
+            <li class="change-item"><strong>Local notifications</strong> fired N minutes before each timed event, lead time configurable.</li>
+            <li class="change-item"><strong>Launch at login</strong> via <span class="mono">SMAppService.mainApp</span>.</li>
+          </ul>
+        </div>
+
+        <div class="change-group">
+          <div class="change-group-label known">Known limitations</div>
+          <ul class="change-list">
+            <li class="change-item"><strong>Read-only.</strong> No event creation, no quick-add. Coming in v1.1.</li>
+            <li class="change-item"><strong>Cross-source duplicates.</strong> Events that appear in both an EventKit calendar and a connected Google calendar will appear twice. Dedup is on the v1.1 list.</li>
+            <li class="change-item"><strong>Refresh-on-open only.</strong> Events refresh when the popover opens — there's no background timer yet.</li>
+            <li class="change-item"><strong>No auto-update.</strong> Future versions will need to be downloaded manually. Sparkle is on the roadmap.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="release">
+      <div class="release-meta">
+        <div class="release-version">1.1</div>
+        <div class="release-date">Planned</div>
+        <span class="release-tag upcoming"><span class="dot"></span>Upcoming</span>
+      </div>
+      <div class="release-body">
+        <h2 class="release-headline">The shortlist for next.</h2>
+        <p class="release-lead">
+          Rough order. Nothing here is committed to a date — feedback from v1.0 will shape it.
+        </p>
+
+        <div class="change-group">
+          <div class="change-group-label upcoming">Coming next</div>
+          <ul class="change-list">
+            <li class="change-item"><strong>Event creation and quick-add.</strong> Type a line, get an event.</li>
+            <li class="change-item"><strong>Cross-source dedup.</strong> Same event in EventKit and Google shouldn't show up twice.</li>
+            <li class="change-item"><strong>Background sync.</strong> Events refresh on a timer, not only when you open the popover.</li>
+            <li class="change-item"><strong>Auto-update.</strong> Sparkle integration so you don't have to come back to this page.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <div class="source-note">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <span>
+        The source of truth lives in <span class="mono">CHANGELOG.md</span> at <a href="https://github.com/enzoabuliak/MenuCalendar/blob/main/CHANGELOG.md">github.com/enzoabuliak/MenuCalendar</a>. This page renders the same content with a little more breathing room.
+      </span>
+    </div>
+
+  </div>
+</section>
+
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <span class="logo-glyph">4</span>
+          MenuCalendar
+        </div>
+        <div class="footer-tagline">A menu bar calendar for macOS.</div>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/support.html">Support</a>
+        <a href="/changelog.html">Changelog</a>
+        <a href="https://github.com/enzoabuliak/MenuCalendar">GitHub</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>© 2026 Enzo Abuliak</span>
+      <span>Made in Mendocino, California</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
