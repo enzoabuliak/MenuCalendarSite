@@ -301,6 +301,83 @@
   }
   .privacy-link:hover { border-color: var(--cy); }
 
+  /* ── FIRST LAUNCH / INSTALL ── */
+  .install-note {
+    display: grid; grid-template-columns: auto 1fr; gap: var(--s-4);
+    align-items: start;
+    border: 1px solid var(--ui);
+    border-left: 2px solid var(--ye);
+    border-radius: var(--r-3);
+    background: linear-gradient(135deg, rgba(208, 162, 21, 0.05), transparent 60%), var(--bg-2);
+    padding: var(--s-5) var(--s-6);
+    margin-bottom: var(--s-6);
+  }
+  .install-note-icon { color: var(--ye); margin-top: 2px; flex-shrink: 0; }
+  .install-note p { font-size: 15px; color: var(--tx-2); line-height: var(--lh-loose); }
+  .install-note p strong { color: var(--tx); font-weight: 500; }
+  .install-note p a { color: var(--ye); border-bottom: 1px solid transparent; transition: border-color var(--dur-2) var(--ease-std); }
+  .install-note p a:hover { border-bottom-color: var(--ye); }
+
+  .install-steps {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--ui); border: 1px solid var(--ui);
+  }
+  .install-step {
+    background: var(--bg); padding: var(--s-6);
+    display: flex; flex-direction: column; gap: var(--s-3);
+  }
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-32); font-weight: 500; line-height: 1;
+    color: var(--ui-3); letter-spacing: var(--tr-tight);
+    margin-bottom: var(--s-2);
+  }
+  .step-title { font-size: var(--fs-16); font-weight: 500; color: var(--tx); }
+  .step-body { font-size: var(--fs-14); color: var(--tx-2); line-height: var(--lh-base); }
+  .step-body strong { color: var(--tx); font-weight: 500; }
+
+  .install-fallback {
+    margin-top: var(--s-5);
+    border: 1px solid var(--ui);
+    border-radius: var(--r-3);
+    background: var(--bg-2);
+    padding: 0 var(--s-5);
+  }
+  .install-fallback summary {
+    cursor: pointer; list-style: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-11); text-transform: uppercase; letter-spacing: var(--tr-mega);
+    color: var(--tx-2);
+    padding: var(--s-4) 0;
+    display: flex; align-items: center; gap: var(--s-3);
+    transition: color var(--dur-2) var(--ease-std);
+  }
+  .install-fallback summary:hover { color: var(--tx); }
+  .install-fallback summary::-webkit-details-marker { display: none; }
+  .install-fallback summary .chev { color: var(--tx-3); transition: transform var(--dur-2) var(--ease-std); }
+  .install-fallback[open] summary .chev { transform: rotate(90deg); }
+  .install-fallback-body {
+    padding: 0 0 var(--s-5);
+    border-top: 1px solid var(--ui);
+    padding-top: var(--s-4);
+  }
+  .install-fallback-body p { font-size: var(--fs-14); color: var(--tx-2); line-height: var(--lh-loose); margin-bottom: var(--s-3); }
+  .install-fallback-body p:last-child { margin-bottom: 0; }
+  .install-fallback-body strong { color: var(--tx); font-weight: 500; }
+  .install-fallback-body code {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.92em;
+    color: var(--tx); background: var(--bg);
+    padding: 2px 6px; border-radius: var(--r-1); border: 1px solid var(--ui);
+  }
+  .install-terminal {
+    display: block; margin-top: var(--s-3);
+    font-family: 'JetBrains Mono', monospace; font-size: var(--fs-13, 13px);
+    color: var(--tx); background: var(--bg);
+    padding: var(--s-3) var(--s-4); border-radius: var(--r-2); border: 1px solid var(--ui);
+    overflow-x: auto; white-space: nowrap;
+  }
+  .install-terminal .prompt { color: var(--gr); user-select: none; }
+
   /* ── RESPONSIVE OVERRIDES (page-specific) ── */
   @media (max-width: 760px) {
     .hero { padding: var(--s-7) 0 var(--s-6); }
@@ -312,6 +389,7 @@
     .detail-grid { grid-template-columns: 1fr; gap: var(--s-5); }
     .privacy-strip { grid-template-columns: 1fr; padding: var(--s-5); }
     .agenda-row { grid-template-columns: 48px 1fr; }
+    .install-steps { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -339,7 +417,7 @@
 <section class="hero" id="download">
   <div class="container">
     <div class="hero-inner">
-      <span class="pill hero-pill"><span class="dot"></span>Version 1.0 · Free for macOS</span>
+      <span class="pill hero-pill"><span class="dot ye"></span>Preview build · Free for macOS</span>
 
       <h1 class="hero-title">Your calendar,<br>one click away<span class="accent">.</span></h1>
 
@@ -362,8 +440,8 @@
       <div class="hero-meta">
         <span>macOS 14+</span>
         <span class="dotsep">Apple Silicon &amp; Intel</span>
-        <span class="dotsep">Signed &amp; notarised</span>
-        <span class="dotsep">~3 MB</span>
+        <span class="dotsep"><a href="#install" style="border-bottom: 1px solid var(--ui-3);">First-launch setup →</a></span>
+        <span class="dotsep">~600 KB</span>
       </div>
     </div>
 
@@ -493,6 +571,62 @@
 </section>
 
 
+<section class="section" id="install">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow ye">First launch</span>
+        <h2 class="section-title">Opening MenuCalendar the first time.</h2>
+      </div>
+    </div>
+
+    <div class="install-note">
+      <svg class="install-note-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <p>
+        This is a <strong>preview build</strong> — it isn't signed with an Apple Developer ID yet, so macOS asks you to confirm it the first time you open it. That's expected, and it's a one-time step. The signed, notarised <strong>v1.0</strong> release will open with a single click. Until then, here's the 20-second version.
+      </p>
+    </div>
+
+    <div class="install-steps">
+      <div class="install-step">
+        <div class="step-num">1</div>
+        <div class="step-title">Unzip &amp; move to Applications</div>
+        <div class="step-body">Double-click the downloaded zip, then drag <span class="kbd">MenuCalendar.app</span> into your <span class="kbd">Applications</span> folder.</div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">2</div>
+        <div class="step-title">Right-click → Open</div>
+        <div class="step-body"><strong>Right-click</strong> (or Control-click) the app and choose <strong>Open</strong>. The right-click menu is the trick — a plain double-click won't give you the option the first time.</div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">3</div>
+        <div class="step-title">Confirm once</div>
+        <div class="step-body">A dialog says macOS can't verify the developer. Click <strong>Open</strong>. You'll only ever see this once — every launch after is normal.</div>
+      </div>
+    </div>
+
+    <details class="install-fallback">
+      <summary>
+        <span class="chev" aria-hidden="true">›</span>
+        Don't see an “Open” button? (newer macOS) — or prefer Terminal
+      </summary>
+      <div class="install-fallback-body">
+        <p>
+          <strong>On macOS Sequoia and later,</strong> right-click → Open is sometimes blocked. Instead: try to open the app once (double-click), dismiss the warning, then go to <span class="kbd">System Settings → Privacy &amp; Security</span>, scroll to the Security section, and click <strong>Open Anyway</strong> next to the MenuCalendar message. Confirm with Touch ID or your password.
+        </p>
+        <p>
+          <strong>Or, from Terminal,</strong> strip the quarantine flag after moving the app to Applications:
+        </p>
+        <code class="install-terminal"><span class="prompt">$ </span>xattr -dr com.apple.quarantine /Applications/MenuCalendar.app</code>
+        <p style="margin-top: var(--s-3);">
+          Either way it's a one-time step. None of this is needed once the notarised v1.0 ships — track it on the <a href="changelog.html" class="link-cy">changelog</a>.
+        </p>
+      </div>
+    </details>
+  </div>
+</section>
+
+
 <section class="section" id="features">
   <div class="container">
     <div class="section-head">
@@ -548,9 +682,9 @@
     <div class="detail-grid">
       <div>
         <span class="eyebrow">Designed for macOS</span>
-        <h2 class="section-title">Built native. Signed, notarised, sandbox-aware.</h2>
+        <h2 class="section-title">Built native, down to the status item.</h2>
         <p class="muted" style="margin-top: var(--s-4); max-width: 50ch; line-height: var(--lh-loose);">
-          SwiftUI for the popover and Settings. AppKit where the platform expects it — the status item, the URL scheme, the lifecycle. Developer ID signed and notarised by Apple, so it opens with one click on any modern Mac.
+          SwiftUI for the popover and Settings. AppKit where the platform expects it — the status item, the URL scheme, the lifecycle. The shipping <strong style="color: var(--tx); font-weight: 500;">v1.0</strong> will be Developer ID signed and notarised by Apple; the current preview just needs <a href="#install" class="link-cy">one extra click</a> the first time.
         </p>
       </div>
 
@@ -569,7 +703,7 @@
         </div>
         <div class="spec-row">
           <span class="spec-label">Footprint</span>
-          <span class="spec-val">~3 MB <span class="muted">stapled zip</span></span>
+          <span class="spec-val">~600 KB <span class="muted">zipped download</span></span>
         </div>
         <div class="spec-row">
           <span class="spec-label">License</span>
